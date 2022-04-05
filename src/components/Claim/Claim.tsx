@@ -32,11 +32,6 @@ const Claim = () => {
                 <div className='connect_button'>
                   <button>Connect your wallet</button>
                 </div>
-                <div>
-                  <p className='error_message'>
-                    Note: Install metamask to connect
-                  </p>
-                </div>
               </div>
             </div>
           </div>
