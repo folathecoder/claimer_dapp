@@ -1,0 +1,111 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #0d0f19;
+  max-width: 100vw;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 25px;
+}
+
+.claim_message-container {
+  max-width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: center;
+  align-items: center;
+}
+
+.claim_message-container > * {
+  width: 100%;
+}
+
+.claim_message {
+  margin: 0 auto;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.connect_button {
+  margin: 20px 0px;
+}
+
+.connect_button button {
+  border: none;
+  background-color: orange;
+  color: black;
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.connect_button:hover {
+  opacity: 0.8;
+}
+
+.claim_card-container {
+  height: 100vh;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.claim_card-container > * {
+  width: 100%;
+}
+
+.claim_card {
+  margin: 0 auto;
+  max-width: 320px;
+  background-color: orange;
+  min-height: 250px;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.claim_card p {
+  font-size: 20px;
+  color: black;
+}
+
+.claim_card button {
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100px;
+}
+
+.claim_card button:hover {
+  opacity: 0.8;
+}
+
+.claim_balance {
+  font-size: 40px !important;
+  line-height: 48px !important;
+  font-weight: bold;
+}
+
+.claim_token {
+  font-size: 16px !important;
+  line-height: 20px !important;
+}
