@@ -15,7 +15,9 @@ const Claim = () => {
 
   // set to true of balance is Zero
   const [noClaim, setNoClaim] = useState(true);
-  const [currentAccount, setCurrentAccount] = useState<string>('');
+
+  // push the user's wallet address to this state
+  const [userAddress, setUserAddress] = useState<string>('');
 
   return (
     <main>
@@ -47,12 +49,12 @@ const Claim = () => {
                   <p className='claim_token'>$PING</p>
                 </div>
                 <div>
-                  <p className={'address'}>{`${currentAccount.slice(
+                  <p className={'address'}>{`${userAddress.slice(
                     0,
                     8
-                  )}...${currentAccount.slice(
-                    currentAccount.length - 4,
-                    currentAccount.length
+                  )}...${userAddress.slice(
+                    userAddress.length - 4,
+                    userAddress.length
                   )}`}</p>
                 </div>
                 <div>
