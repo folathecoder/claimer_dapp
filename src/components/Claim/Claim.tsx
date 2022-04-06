@@ -1,28 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ClaimStyles.css';
 import { contractABI, contractAddress } from '../utils/constants';
 import { ethers } from 'ethers';
+declare let window: any;
+const { ethereum } = window;
 
 const Claim = () => {
-  //set to true if wallet is connected
-  const [isWalletConnected, setIsWalletConnected] = useState(false);
-
-  //set to true if the balance is claimed
+  const [metamaskInstalled, setMetamaskedInstalled] = useState(false);
   const [claimed, setClaimed] = useState(false);
-
-  // set to true when the claim() function is called and yet to be fulfilled
   const [claimLoading, setClaimLoading] = useState(false);
+  const [noClaim, setNoClaim] = useState(false);
+  const [userAddress, setUserAddress] = useState<string | null>(null);
 
-  // set to true of balance is Zero
-  const [noClaim, setNoClaim] = useState(true);
+  const checkIfWalletIsConnected = async () => {
+    try {
+      if (!ethereum) {
+        setMetamaskedInstalled(false);
+      } else {
+        setMetamaskedInstalled(true);
+        const accounts = await ethereum.request({ method: 'eth_accounts' });
+        if (accounts.length) {
+          setUserAddress(accounts[0]);
+        } else {
+          console.log('No accounts found!');
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // push the user's wallet address to this state
-  const [userAddress, setUserAddress] = useState<string>('');
+  const connectWallet = async () => {
+    try {
+      if (!ethereum) return alert('Please install metamask!');
+      const accounts = await ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+      setUserAddress(accounts[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    checkIfWalletIsConnected();
+  }, []);
+
+  const getContract = () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+    return contract;
+  };
+
+  const getReimbursementBalance = async () => {
+    const contract = getContract();
+    if (userAddress) {
+      const balance = await contract._dues[userAddress];
+      return await balance;
+    }
+  };
+
+  getReimbursementBalance();
 
   return (
     <main>
       <section className='claim__container'>
-        {!isWalletConnected ? (
+        {userAddress === null ? (
           <div className='claim_message-container'>
             <div>
               <div className='claim_message'>
@@ -32,8 +76,13 @@ const Claim = () => {
                   </p>
                 </div>
                 <div className='connect_button'>
-                  <button>Connect your wallet</button>
+                  <button onClick={connectWallet}>Connect your wallet</button>
                 </div>
+                {!metamaskInstalled && (
+                  <div>
+                    <p>Note: Install metamask to claim</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
